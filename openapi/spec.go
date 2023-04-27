@@ -224,7 +224,7 @@ func (o *Operation) MarshalYAML() (interface{}, error) {
 	if o.Security == nil {
 		return omitOperationNilFields(o), nil
 	}
-	return o, nil
+	return *o, nil
 }
 
 // MarshalJSON excludes empty but non-null SecurityRequirements.
