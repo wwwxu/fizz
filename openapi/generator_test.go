@@ -75,22 +75,6 @@ type (
 		L int
 	}
 	Foo[T any] struct {
-		foo T `explode:"true"`
-	}
-	queryIn struct {
-		Param                       string    `query:"param" json:"param" validate:"required"`
-		ParamOptional               string    `query:"param-optional" json:"param-optional"`
-		Params                      []string  `query:"params" json:"params"`
-		ParamInt                    int       `query:"param-int" json:"param-int"`
-		ParamBool                   bool      `query:"param-bool" json:"param-bool"`
-		ParamDefault                string    `query:"param-default" json:"param-default" default:"default" validate:"required"`
-		ParamPtr                    *string   `query:"param-ptr" json:"param-ptr"`
-		ParamComplex                time.Time `query:"param-complex" json:"param-complex"`
-		ParamExplode                []string  `query:"param-explode" json:"param-explode" explode:"true"`
-		ParamExplodeDisabled        []string  `query:"param-explode-disabled" json:"param-explode-disabled" explode:"false"`
-		ParamExplodeString          string    `query:"param-explode-string" json:"param-explode-string" explode:"true"`
-		ParamExplodeDefault         []string  `query:"param-explode-default" json:"param-explode-default" default:"1,2,3" explode:"true"`
-		ParamExplodeDefaultDisabled []string  `query:"param-explode-disabled-default" json:"param-explode-disabled-default" default:"1,2,3" explode:"false"`
 	}
 )
 
