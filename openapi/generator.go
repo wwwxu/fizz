@@ -29,7 +29,7 @@ var (
 )
 
 var (
-	typePathRe = regexp.MustCompile(`([\*\-a-zA-Z0-9\.\/_]+)(\[([\*\-a-zA-Z0-9\.\/_]+)\])?`)
+	typePathRe = regexp.MustCompile(`([\*\-a-zA-Z0-9\.\/_]+)(\[(\[\])?([\*\-a-zA-Z0-9\.\/_]+)\])?`)
 )
 
 // mediaTags maps media types to well-known
@@ -1155,10 +1155,14 @@ func (g *Generator) typeName(t reflect.Type) string {
 	}
 	rawName := t.String() // package.name.
 	submatch := typePathRe.FindStringSubmatch(rawName)
-	var name, typeParam = submatch[1], submatch[3]
+	var name, isArray, typeParam = submatch[1], submatch[3] == "[]", submatch[4]
 	if len(typeParam) > 0 {
 		lastIndex := strings.LastIndex(typeParam, "/")
-		typeParam = "-" + typeParam[lastIndex+1:]
+		if isArray {
+			typeParam = fmt.Sprintf("-%s-array", typeParam[lastIndex+1:])
+		} else {
+			typeParam = fmt.Sprintf("-%s", typeParam[lastIndex+1:])
+		}
 	}
 	sp := strings.Index(name, ".")
 	pkg := name[:sp]
@@ -1265,7 +1269,7 @@ func fieldNameFromTag(sf reflect.StructField, tagName string) string {
 	return name
 }
 
-/// parseExampleValue is used to transform the string representation of the example value to the correct type.
+// / parseExampleValue is used to transform the string representation of the example value to the correct type.
 func parseExampleValue(t reflect.Type, value string) (interface{}, error) {
 	// If the type implements Exampler use the ParseExample method to create the example
 	i, ok := reflect.New(t).Interface().(Exampler)
