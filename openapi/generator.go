@@ -273,11 +273,10 @@ func (g *Generator) AddOperation(path, method, tag string, in, out reflect.Type,
 	if tag != "" {
 		op.Tags = append(op.Tags, tag)
 	}
-	// Operations with methods GET/HEAD/DELETE cannot have a body.
+	// Operations with methods GET/HEAD cannot have a body.
 	// Non parameters fields will be ignored.
 	allowBody := method != http.MethodGet &&
-		method != http.MethodHead &&
-		method != http.MethodDelete
+		method != http.MethodHead
 
 	if in != nil {
 		if in.Kind() == reflect.Ptr {
