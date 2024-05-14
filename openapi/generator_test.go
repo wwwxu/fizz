@@ -606,6 +606,7 @@ func TestTypeName(t *testing.T) {
 
 	// generic type
 	assert.Equal(t, "Foo-openapi.X", g.typeName(rt(Foo[X]{})))
+	assert.Equal(t, "Foo-openapi.X-array", g.typeName(rt(Foo[[]X]{})))
 }
 
 // TestSetInfo tests that the informations
